@@ -24,10 +24,13 @@ def compute_mean(local_X, local_cluster_labels, k):
         Output: list of k many local mean matrices, shape m x n
     """
     m, n = get_data_dims(local_X)
-    npinf = np.zeros([m, n])
+    if m == 1:
+        npinf = np.zeros(n)
+    else:
+        npinf = np.zeros([m, n])
     local_means = [[] for i in range(k)]
     for i in range(len(local_cluster_labels)):
-        local_means[local_cluster_labels[i]] += [local_X[i]]
+        local_means[local_cluster_labels[i]].append(local_X[i])
 
     #  Return the origin if no clusters have been assigned to cluster k
     #  !!! is this the way to handle this?
